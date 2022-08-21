@@ -4,7 +4,7 @@ import SearchForm from './components/SearchForm';
 
 function App() {
 	return (
-		<Container>
+		<Container className="mt-3">
 			<SearchForm />
 		</Container>
 	);
