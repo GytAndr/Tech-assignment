@@ -14,12 +14,12 @@ export default function SearchForm() {
 	//set isInvalid=false && setErrorMsg(null)
 	//pass value to state => setInputValue(e.target.value)
 	const onChangeValidate = (e) => {
-		const regEx = new RegExp(/^[A-Za-z\s]*$/);
+		const regEx = new RegExp(/^[A-Za-z\s]{1,}$/);
 		if (!regEx.test(e.target.value)) {
-			setRegIsValid(true);
+			setRegIsInvalid(true);
 			setErrorMsg('Please enter only letters including space');
 		} else {
-			setRegIsValid(false);
+			setRegIsInvalid(false);
 			setErrorMsg('');
 			setInputValue(e.target.value);
 		}
@@ -35,7 +35,7 @@ export default function SearchForm() {
 	};
 	const [inputValue, setInputValue] = useState();
 	const [errorMsg, setErrorMsg] = useState('');
-	const [regIsValid, setRegIsValid] = useState();
+	const [regIsInvalid, setRegIsInvalid] = useState();
 	return (
 		<Row>
 			<Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -43,7 +43,7 @@ export default function SearchForm() {
 					<Form.Group className="mb-3">
 						<Form.Label htmlFor="companyInputField">Company symbol</Form.Label>
 
-						{regIsValid ? (
+						{regIsInvalid ? (
 							<Alert variant="danger small p-1">{errorMsg}</Alert>
 						) : null}
 
@@ -56,7 +56,7 @@ export default function SearchForm() {
 								id="companyInputField"
 								placeholder="Enter symbol e.g. AAPL"
 								required
-								isInvalid={regIsValid}
+								isInvalid={regIsInvalid}
 								maxLength="35"
 								onChange={onChangeValidate}
 							/>
@@ -76,7 +76,7 @@ export default function SearchForm() {
 					</Form.Group>
 				</Col>
 				<Col sm className="d-flex justify-content-center align-items-end mb-3">
-					<Button variant="secondary" type="submit" disabled={regIsValid}>
+					<Button variant="secondary" type="submit" disabled={regIsInvalid}>
 						Search
 					</Button>
 				</Col>
