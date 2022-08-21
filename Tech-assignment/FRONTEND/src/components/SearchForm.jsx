@@ -24,21 +24,21 @@ export default function SearchForm() {
 			setInputValue(e.target.value);
 		}
 	};
-	// const [validated, setValidated] = useState(false);
-	// const handleSubmit = (event) => {
-	// 	const form = event.currentTarget;
-	// 	if (form.checkValidity() === false) {
-	// 		event.preventDefault();
-	// 		event.stopPropagation();
-	// 	}
-	// 	setValidated(true);
-	// };
+	const [validated, setValidated] = useState(false);
+	const handleSubmit = (event) => {
+		const form = event.currentTarget;
+		if (form.checkValidity() === false) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
+		setValidated(true);
+	};
 	const [inputValue, setInputValue] = useState();
 	const [errorMsg, setErrorMsg] = useState('');
 	const [regIsValid, setRegIsValid] = useState();
 	return (
 		<Row>
-			<Form>
+			<Form noValidate validated={validated} onSubmit={handleSubmit}>
 				<Col sm>
 					<Form.Group className="mb-3">
 						<Form.Label htmlFor="companyInputField">Company symbol</Form.Label>
@@ -76,7 +76,7 @@ export default function SearchForm() {
 					</Form.Group>
 				</Col>
 				<Col sm className="d-flex justify-content-center align-items-end mb-3">
-					<Button variant="secondary" type="submit">
+					<Button variant="secondary" type="submit" disabled={regIsValid}>
 						Search
 					</Button>
 				</Col>
