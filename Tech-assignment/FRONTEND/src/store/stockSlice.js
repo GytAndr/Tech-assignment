@@ -1,22 +1,20 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-	stock: {
-		country: 'US',
-		currency: 'USD',
-		exchange: 'NASDAQ NMS - GLOBAL MARKET',
-		finnhubIndustry: 'Technology',
-		ipo: '1980-12-12',
-		logo: 'https://static.finnhub.io/logo/87cb30d8-80df-11ea-8951-00000000092a.png',
-		marketCapitalization: 2756455.4436619994,
-		name: 'Apple Inc',
-		phone: '14089961010.0',
-		shareOutstanding: 16070.8,
-		ticker: 'AAPL',
-		weburl: 'https://www.apple.com/',
-	},
+	stock: {},
 	loading: false,
 };
+export const fetchStockFromAPI = createAsyncThunk(
+	'stocks/fetchStock',
+	async (searchTerm) => {
+		const response = await fetch(
+			`https://finnhub.io/api/v1/stock/profile2?symbol=${searchTerm}&token=${
+				import.meta.env.VITE_FINNHUB_API_KEY
+			}`
+		).then((response) => response.json());
+		return response;
+	}
+);
 
 export const stockSlice = createSlice({
 	name: 'stocks',
@@ -25,6 +23,16 @@ export const stockSlice = createSlice({
 		pull: (state, action) => {
 			const url = `url ${action.payload} end of url `;
 			state.stock = url;
+		},
+	},
+	extraReducers: {
+		[fetchStockFromAPI.fulfilled]: (state, action) => {
+			console.log(action.payload);
+			state.stock = action.payload;
+			state.loading = false;
+		},
+		[fetchStockFromAPI.pending]: (state, action) => {
+			state.loading = true;
 		},
 	},
 });

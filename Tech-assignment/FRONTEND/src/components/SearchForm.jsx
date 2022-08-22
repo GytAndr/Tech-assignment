@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Alert from 'react-bootstrap/Alert';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { stockSlice } from '../store/stockSlice';
+import { fetchStockFromAPI } from '../store/stockSlice';
 
 export default function SearchForm() {
 	//Onchange make RegEx validation,
@@ -34,7 +34,7 @@ export default function SearchForm() {
 			setValidated(false);
 		}
 		event.preventDefault();
-		dispatch(stockSlice.actions.pull(inputValue));
+		dispatch(fetchStockFromAPI(inputValue));
 		setValidated(true);
 		setInputValue('');
 	};
