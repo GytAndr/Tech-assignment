@@ -27,7 +27,6 @@ export const stockSlice = createSlice({
 	},
 	extraReducers: {
 		[fetchStockFromAPI.fulfilled]: (state, action) => {
-			console.log(action.payload);
 			state.stock = action.payload;
 			state.loading = false;
 		},

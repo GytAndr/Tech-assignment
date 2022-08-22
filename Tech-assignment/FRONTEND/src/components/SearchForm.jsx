@@ -31,11 +31,11 @@ export default function SearchForm() {
 		if (form.checkValidity() === false) {
 			event.preventDefault();
 			event.stopPropagation();
-			setValidated(false);
+			setValidated(true);
 		}
 		event.preventDefault();
 		dispatch(fetchStockFromAPI(inputValue));
-		setValidated(true);
+		setValidated(false);
 		setInputValue('');
 	};
 	const dispatch = useDispatch();
