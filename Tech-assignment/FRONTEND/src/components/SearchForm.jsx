@@ -5,6 +5,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Alert from 'react-bootstrap/Alert';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { stockSlice } from '../store/stockSlice';
 
 export default function SearchForm() {
 	//Onchange make RegEx validation,
@@ -24,15 +26,20 @@ export default function SearchForm() {
 			setInputValue(e.target.value);
 		}
 	};
-	const [validated, setValidated] = useState(false);
 	const handleSubmit = (event) => {
 		const form = event.currentTarget;
 		if (form.checkValidity() === false) {
 			event.preventDefault();
 			event.stopPropagation();
+			setValidated(false);
 		}
+		event.preventDefault();
+		dispatch(stockSlice.actions.pull(inputValue));
 		setValidated(true);
+		setInputValue('');
 	};
+	const dispatch = useDispatch();
+	const [validated, setValidated] = useState(false);
 	const [inputValue, setInputValue] = useState();
 	const [errorMsg, setErrorMsg] = useState('');
 	const [regIsInvalid, setRegIsInvalid] = useState();
