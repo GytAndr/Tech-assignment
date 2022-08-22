@@ -54,7 +54,7 @@ export default function SearchForm() {
 							<Form.Control
 								type="text"
 								id="companyInputField"
-								placeholder="Enter symbol e.g. AAPL"
+								placeholder="Company symbol: AAPL e.g."
 								required
 								isInvalid={regIsInvalid}
 								maxLength="35"
