@@ -19,7 +19,7 @@ function Company() {
 					style={{ height: '128px', width: '128px' }}
 				></Card.Img>
 				<Card.Body>
-					<ListGroup as="ul">
+					<ListGroup as="ul" variant="flush">
 						<ListGroup.Item as="li">Name: {company.ticker}</ListGroup.Item>
 						<ListGroup.Item as="li">Country: {company.country}</ListGroup.Item>
 						<ListGroup.Item as="li">

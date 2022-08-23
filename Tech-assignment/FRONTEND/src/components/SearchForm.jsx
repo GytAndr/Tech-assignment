@@ -16,7 +16,7 @@ export default function SearchForm() {
 	//set isInvalid=false && setErrorMsg(null)
 	//pass value to state => setInputValue(e.target.value)
 	const onChangeValidate = (e) => {
-		const regEx = new RegExp(/^[A-Za-z\s]{1,}$/);
+		const regEx = new RegExp(/^[A-Za-z\s]*$/);
 		if (!regEx.test(e.target.value)) {
 			setRegIsInvalid(true);
 			setErrorMsg('Please enter only letters including space');
@@ -40,7 +40,7 @@ export default function SearchForm() {
 	};
 	const dispatch = useDispatch();
 	const [validated, setValidated] = useState(false);
-	const [inputValue, setInputValue] = useState();
+	const [inputValue, setInputValue] = useState('');
 	const [errorMsg, setErrorMsg] = useState('');
 	const [regIsInvalid, setRegIsInvalid] = useState();
 	return (
@@ -63,6 +63,7 @@ export default function SearchForm() {
 								id="companyInputField"
 								placeholder="Company symbol: AAPL e.g."
 								required
+								value={inputValue || ''}
 								isInvalid={regIsInvalid}
 								maxLength="35"
 								onChange={onChangeValidate}
