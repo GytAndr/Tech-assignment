@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Alert from 'react-bootstrap/Alert';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchStockFromAPI } from '../store/stockSlice';
+import { fetchStockFromAPI, fetchCandleFromAPI } from '../store/stockSlice';
 
 export default function SearchForm() {
 	//Onchange make RegEx validation,
@@ -34,15 +34,29 @@ export default function SearchForm() {
 			setValidated(true);
 		}
 		event.preventDefault();
+		const propsObj = {
+			searchTerm: inputValue,
+			startDate: dateConverter(startDate),
+			endDate: dateConverter(endDate),
+		};
 		dispatch(fetchStockFromAPI(inputValue));
+		dispatch(fetchCandleFromAPI(propsObj));
 		setValidated(false);
 		setInputValue('');
+	};
+	const dateConverter = (date) => {
+		//converts to UNIX for API call
+		return new Date(date).getTime() / 1000;
 	};
 	const dispatch = useDispatch();
 	const [validated, setValidated] = useState(false);
 	const [inputValue, setInputValue] = useState('');
 	const [errorMsg, setErrorMsg] = useState('');
 	const [regIsInvalid, setRegIsInvalid] = useState();
+	const [startDate, setStartDate] = useState();
+	const [endDate, setEndDate] = useState();
+
+	const TempOnCLickHAndler = () => {};
 	return (
 		<Row>
 			<Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -74,13 +88,23 @@ export default function SearchForm() {
 				<Col sm>
 					<Form.Group className="mb-3">
 						<Form.Label htmlFor="startDateInputField">Start date:</Form.Label>
-						<Form.Control id="startDateInputField" type="date" />
+						<Form.Control
+							id="startDateInputField"
+							type="date"
+							value={startDate || ''}
+							onChange={(e) => setStartDate(e.target.value)}
+						/>
 					</Form.Group>
 				</Col>
 				<Col sm>
 					<Form.Group className="mb-3">
 						<Form.Label htmlFor="endDateInputField">Start date:</Form.Label>
-						<Form.Control id="endDateInputField" type="date" />
+						<Form.Control
+							id="endDateInputField"
+							type="date"
+							value={endDate || ''}
+							onChange={(e) => setEndDate(e.target.value)}
+						/>
 					</Form.Group>
 				</Col>
 				<Col sm className="d-flex justify-content-center align-items-end mb-3">
