@@ -46,7 +46,6 @@ export default function SearchForm() {
 		return inputValue && startDate && endDate;
 	};
 	const dispatch = useDispatch();
-	// const [validated, setValidated] = useState(false);
 	const [inputValue, setInputValue] = useState('');
 	const [errorMsg, setErrorMsg] = useState('');
 	const [regIsInvalid, setRegIsInvalid] = useState();
