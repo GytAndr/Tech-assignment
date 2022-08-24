@@ -28,11 +28,6 @@ export default function SearchForm() {
 	};
 	const handleSubmit = (event) => {
 		const form = event.currentTarget;
-		if (form.checkValidity() === false) {
-			event.preventDefault();
-			event.stopPropagation();
-			setValidated(true);
-		}
 		event.preventDefault();
 		const propsObj = {
 			searchTerm: inputValue,
@@ -41,78 +36,91 @@ export default function SearchForm() {
 		};
 		dispatch(fetchStockFromAPI(inputValue));
 		dispatch(fetchCandleFromAPI(propsObj));
-		setValidated(false);
 		setInputValue('');
 	};
 	const dateConverter = (date) => {
 		//converts to UNIX for API call
 		return new Date(date).getTime() / 1000;
 	};
+	const isFormValid = () => {
+		return inputValue && startDate && endDate;
+	};
 	const dispatch = useDispatch();
-	const [validated, setValidated] = useState(false);
+	// const [validated, setValidated] = useState(false);
 	const [inputValue, setInputValue] = useState('');
 	const [errorMsg, setErrorMsg] = useState('');
 	const [regIsInvalid, setRegIsInvalid] = useState();
 	const [startDate, setStartDate] = useState();
 	const [endDate, setEndDate] = useState();
-
-	const TempOnCLickHAndler = () => {};
 	return (
-		<Row>
-			<Form noValidate validated={validated} onSubmit={handleSubmit}>
-				<Col sm>
-					<Form.Group className="mb-3">
-						<Form.Label htmlFor="companyInputField">Company symbol</Form.Label>
+		<>
+			<Form noValidate onSubmit={handleSubmit}>
+				<Row>
+					<Col sm>
+						<Form.Group className="mb-3">
+							<Form.Label htmlFor="companyInputField">
+								Company symbol
+							</Form.Label>
 
-						{regIsInvalid ? (
-							<Alert variant="danger small p-1">{errorMsg}</Alert>
-						) : null}
+							{regIsInvalid ? (
+								<Alert variant="danger small p-1">{errorMsg}</Alert>
+							) : null}
 
-						<InputGroup hasValidation className="position-relative">
-							<InputGroup.Text>
-								<i className="bi bi-building"></i>
-							</InputGroup.Text>
+							<InputGroup hasValidation className="position-relative">
+								<InputGroup.Text>
+									<i className="bi bi-building"></i>
+								</InputGroup.Text>
+								<Form.Control
+									type="text"
+									id="companyInputField"
+									placeholder="Company symbol: AAPL e.g."
+									value={inputValue || ''}
+									isInvalid={regIsInvalid}
+									maxLength="35"
+									minLength="1"
+									onChange={onChangeValidate}
+								/>
+							</InputGroup>
+						</Form.Group>
+					</Col>
+				</Row>
+				<Row>
+					<Col sm lg={6}>
+						<Form.Group className="mb-3">
+							<Form.Label htmlFor="startDateInputField">Start date:</Form.Label>
 							<Form.Control
-								type="text"
-								id="companyInputField"
-								placeholder="Company symbol: AAPL e.g."
+								id="startDateInputField"
+								type="date"
 								required
-								value={inputValue || ''}
-								isInvalid={regIsInvalid}
-								maxLength="35"
-								onChange={onChangeValidate}
+								value={startDate || ''}
+								onChange={(e) => setStartDate(e.target.value)}
 							/>
-						</InputGroup>
-					</Form.Group>
-				</Col>
-				<Col sm>
-					<Form.Group className="mb-3">
-						<Form.Label htmlFor="startDateInputField">Start date:</Form.Label>
-						<Form.Control
-							id="startDateInputField"
-							type="date"
-							value={startDate || ''}
-							onChange={(e) => setStartDate(e.target.value)}
-						/>
-					</Form.Group>
-				</Col>
-				<Col sm>
-					<Form.Group className="mb-3">
-						<Form.Label htmlFor="endDateInputField">Start date:</Form.Label>
-						<Form.Control
-							id="endDateInputField"
-							type="date"
-							value={endDate || ''}
-							onChange={(e) => setEndDate(e.target.value)}
-						/>
-					</Form.Group>
-				</Col>
-				<Col sm className="d-flex justify-content-center align-items-end mb-3">
-					<Button variant="secondary" type="submit" disabled={regIsInvalid}>
-						Search
-					</Button>
-				</Col>
+						</Form.Group>
+					</Col>
+					<Col sm lg={6}>
+						<Form.Group className="mb-3">
+							<Form.Label htmlFor="endDateInputField">End date:</Form.Label>
+							<Form.Control
+								id="endDateInputField"
+								type="date"
+								required
+								value={endDate || ''}
+								onChange={(e) => setEndDate(e.target.value)}
+							/>
+						</Form.Group>
+					</Col>
+				</Row>
+				<Row>
+					<Col
+						sm
+						className="d-flex justify-content-center align-items-end mb-3"
+					>
+						<Button variant="secondary" type="submit" disabled={!isFormValid()}>
+							Search
+						</Button>
+					</Col>
+				</Row>
 			</Form>
-		</Row>
+		</>
 	);
 }

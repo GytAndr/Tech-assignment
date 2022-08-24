@@ -3,7 +3,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 const initialState = {
 	stock: {},
 	candles: {},
-	loading: false,
+	showChart: false,
+	showCompany: false,
 };
 //API call for single Company
 export const fetchStockFromAPI = createAsyncThunk(
@@ -32,21 +33,24 @@ export const fetchCandleFromAPI = createAsyncThunk(
 export const stockSlice = createSlice({
 	name: 'stocks',
 	initialState,
-	reducers: {},
+	reducers: {
+		showChart(state) {
+			state.showChart = true;
+		},
+		hideChart(state) {
+			state.showChart = false;
+		},
+	},
 	extraReducers: {
 		[fetchStockFromAPI.fulfilled]: (state, action) => {
 			state.stock = action.payload;
-			state.loading = false;
+			state.showCompany = true;
 		},
 		[fetchStockFromAPI.pending]: (state, action) => {
-			state.loading = true;
+			state.showCompany = false;
 		},
 		[fetchCandleFromAPI.fulfilled]: (state, action) => {
 			state.candles = action.payload;
-			state.loading = false;
-		},
-		[fetchCandleFromAPI.pending]: (state, action) => {
-			state.loading = true;
 		},
 	},
 });

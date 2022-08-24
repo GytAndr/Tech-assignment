@@ -1,9 +1,12 @@
 import React from 'react';
 import Plot from 'react-plotly.js';
+import Row from 'react-bootstrap/esm/Row';
+import Col from 'react-bootstrap/esm/Col';
 import { useSelector } from 'react-redux';
 
 function Chart() {
 	const candlesData = useSelector((state) => state.stocks.candles);
+	const company = useSelector((state) => state.stocks.stock);
 	const convertToDate = (timestamp) => {
 		return new Date(timestamp * 1000).toLocaleDateString('en-DE');
 	};
@@ -14,8 +17,7 @@ function Chart() {
 		low: candlesData.l,
 		open: candlesData.o,
 
-		// cutomise colors
-		increasing: { line: { color: 'black' } },
+		increasing: { line: { color: 'green' } },
 		decreasing: { line: { color: 'red' } },
 
 		type: 'candlestick',
@@ -23,18 +25,29 @@ function Chart() {
 		yaxis: 'y',
 	};
 	return (
-		<Plot
-			data={[trace]}
-			layout={{
-				dragmode: 'zoom',
-				showlegend: false,
-				xaxis: {
-					rangeslider: {
-						visible: false,
-					},
-				},
-			}}
-		/>
+		<Row>
+			<Col className="d-flex justify-content-center">
+				<Plot
+					data={[trace]}
+					layout={{
+						title: { text: company.ticker },
+						dragmode: false,
+						autosize: true,
+						showlegend: false,
+						margin: {
+							autoexpand: true,
+						},
+
+						xaxis: {
+							rangeslider: {
+								visible: false,
+							},
+						},
+					}}
+					useResizeHandler
+				/>
+			</Col>
+		</Row>
 	);
 }
 

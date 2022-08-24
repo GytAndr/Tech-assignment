@@ -7,12 +7,14 @@ import Chart from './components/Chart';
 import { useSelector } from 'react-redux';
 
 function App() {
-	const loading = useSelector((state) => state.stocks.loading);
+	// const loading = useSelector((state) => state.stocks.loading);
+	const showCompany = useSelector((state) => state.stocks.showCompany);
+	const showChart = useSelector((state) => state.stocks.showChart);
 	return (
 		<Container className="mt-3">
 			<SearchForm />
-			{loading ? <Loading /> : <Company />}
-			<Chart />
+			{showCompany && <Company />}
+			{showChart && <Chart />}
 		</Container>
 	);
 }
