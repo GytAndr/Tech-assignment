@@ -21,28 +21,39 @@ Select date range using date inputs, for required timeframe of company stock pri
 Prerequisites: Git and Node.js
 
 ```
-FOR FRONTEND
 # Clone this repository
 $ git clone https://github.com/GytAndr/Tech-assignment.git
 
-# Go into the repository
-$ cd FRONTEND
+FOR BACKEND
 
-# Install dependencies
-$ npm install
+  # Go into the repository
+  $ cd BACKEND
 
-# Build and copy react-front end
-$ npm build:ui
+  # Install dependencies
+  $ npm install
+
+  # Start Node server locally
+  $ npm start
+
+FOR FRONTEND
+
+  # Go into the repository
+  $ cd FRONTEND
+
+  # Install dependencies
+  $ npm install
+
+  # Configure .env file by adding your Finnhub API key
+  VITE_FINNHUB_API_KEY=yourAPIkey
+
+  # Build
+  $ npm run build
+
 ```
 
-config .env file
+# Preview production version
 
-```
-$MONGODB_URI=
+$ npm run preview
 
-$ PORT=
-
-$ TEST_MONGODB_URI=
-
-$ FINHUB_KEY=
-```
+**NOTE**
+In order to test backend locally Cross-Origin Resource Sharing (CORS) needs to be disabled on client side, otherwise POST request will be blocked by browser.
