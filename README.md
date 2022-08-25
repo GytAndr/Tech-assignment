@@ -49,11 +49,13 @@ FOR FRONTEND
   # Build
   $ npm run build
 
+  ## Execute app
+  # to run prod version
+  $ npm run preview
+  
+  # to run dev version
+  $ npm run dev
 ```
-
-# Preview production version
-
-$ npm run preview
 
 **NOTE**
 
