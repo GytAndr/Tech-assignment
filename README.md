@@ -59,4 +59,5 @@ FOR FRONTEND
 
 **NOTE**
 
-**In order to test backend locally Cross-Origin Resource Sharing (CORS) needs to be disabled on client side, otherwise POST request will be blocked by browser.**
+**In order to test backend locally Cross-Origin Resource Sharing (CORS) needs to be disabled on client side, otherwise POST request will be blocked by browser.
+One of ways how to disable it is to install Moesif Origin & CORS Changer plugin on Chrome/Chromium browsers**
