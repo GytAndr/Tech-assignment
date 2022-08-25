@@ -56,4 +56,5 @@ FOR FRONTEND
 $ npm run preview
 
 **NOTE**
-In order to test backend locally Cross-Origin Resource Sharing (CORS) needs to be disabled on client side, otherwise POST request will be blocked by browser.
+
+**In order to test backend locally Cross-Origin Resource Sharing (CORS) needs to be disabled on client side, otherwise POST request will be blocked by browser.**
