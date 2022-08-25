@@ -1,12 +1,12 @@
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Alert from 'react-bootstrap/Alert';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchStockFromAPI, fetchCandleFromAPI } from '../store/stockSlice';
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Alert from "react-bootstrap/Alert";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { fetchStockFromAPI, fetchCandleFromAPI } from "../store/stockSlice";
 
 export default function SearchForm() {
 	//Onchange make RegEx validation,
@@ -19,10 +19,10 @@ export default function SearchForm() {
 		const regEx = new RegExp(/^[A-Za-z\s]*$/);
 		if (!regEx.test(e.target.value)) {
 			setRegIsInvalid(true);
-			setErrorMsg('Please enter only letters including space');
+			setErrorMsg("Please enter only letters including space");
 		} else {
 			setRegIsInvalid(false);
-			setErrorMsg('');
+			setErrorMsg("");
 			setInputValue(e.target.value);
 		}
 	};
@@ -36,7 +36,8 @@ export default function SearchForm() {
 		};
 		dispatch(fetchStockFromAPI(inputValue));
 		dispatch(fetchCandleFromAPI(propsObj));
-		setInputValue('');
+		sendDataToBackend();
+		setInputValue("");
 	};
 	const dateConverter = (date) => {
 		//converts to UNIX for API call
@@ -45,9 +46,26 @@ export default function SearchForm() {
 	const isFormValid = () => {
 		return inputValue && startDate && endDate;
 	};
+	const sendDataToBackend = () => {
+		// prettier-ignore
+		const sendData = {
+			"company": inputValue,
+			"startDate": startDate,
+			"endDate": endDate
+		};
+		fetch("http://localhost:3001/log", {
+			method: "POST",
+			mode: "cors",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json;charset=utf-8",
+			},
+			body: JSON.stringify(sendData),
+		});
+	};
 	const dispatch = useDispatch();
-	const [inputValue, setInputValue] = useState('');
-	const [errorMsg, setErrorMsg] = useState('');
+	const [inputValue, setInputValue] = useState("");
+	const [errorMsg, setErrorMsg] = useState("");
 	const [regIsInvalid, setRegIsInvalid] = useState();
 	const [startDate, setStartDate] = useState();
 	const [endDate, setEndDate] = useState();
@@ -73,7 +91,7 @@ export default function SearchForm() {
 									type="text"
 									id="companyInputField"
 									placeholder="Company symbol: AAPL e.g."
-									value={inputValue || ''}
+									value={inputValue || ""}
 									isInvalid={regIsInvalid}
 									maxLength="35"
 									minLength="1"
@@ -91,7 +109,7 @@ export default function SearchForm() {
 								id="startDateInputField"
 								type="date"
 								required
-								value={startDate || ''}
+								value={startDate || ""}
 								onChange={(e) => setStartDate(e.target.value)}
 							/>
 						</Form.Group>
@@ -103,7 +121,7 @@ export default function SearchForm() {
 								id="endDateInputField"
 								type="date"
 								required
-								value={endDate || ''}
+								value={endDate || ""}
 								onChange={(e) => setEndDate(e.target.value)}
 							/>
 						</Form.Group>

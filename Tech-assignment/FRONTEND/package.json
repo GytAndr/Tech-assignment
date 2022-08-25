@@ -1,7 +1,7 @@
 {
 	"name": "finnhub-tech",
 	"private": true,
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"author": "Gytis Andriejunas",
 	"type": "module",
 	"scripts": {
