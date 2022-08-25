@@ -1,9 +1,9 @@
-import React from 'react';
-import Row from 'react-bootstrap/Row';
-import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
-import { useSelector, useDispatch } from 'react-redux';
-import { stockSlice } from '../store/stockSlice';
+import React from "react";
+import Row from "react-bootstrap/Row";
+import Card from "react-bootstrap/Card";
+import ListGroup from "react-bootstrap/ListGroup";
+import { useSelector, useDispatch } from "react-redux";
+import { stockSlice } from "../store/stockSlice";
 
 function Company() {
 	const dispatch = useDispatch();
@@ -15,19 +15,19 @@ function Company() {
 		<Row className="justify-content-center">
 			<Card
 				className="flex-column p-4 align-items-center"
-				style={{ width: 'auto' }}
+				style={{ width: "auto" }}
 			>
 				<Card.Img
 					src={company.logo}
 					title="press to show chart"
-					style={{ height: '128px', width: '128px', cursor: 'pointer' }}
+					style={{ height: "128px", width: "128px", cursor: "pointer" }}
 					onClick={showCandlesChart}
 				></Card.Img>
 				<Card.Body>
 					<ListGroup as="ul" variant="flush">
 						<ListGroup.Item
 							as="li"
-							style={{ cursor: 'pointer' }}
+							style={{ cursor: "pointer" }}
 							title="press to show chart"
 							onClick={showCandlesChart}
 						>

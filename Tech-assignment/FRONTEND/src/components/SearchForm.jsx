@@ -6,7 +6,11 @@ import Col from "react-bootstrap/Col";
 import Alert from "react-bootstrap/Alert";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchStockFromAPI, fetchCandleFromAPI } from "../store/stockSlice";
+import {
+	stockSlice,
+	fetchStockFromAPI,
+	fetchCandleFromAPI,
+} from "../store/stockSlice";
 
 export default function SearchForm() {
 	//Onchange make RegEx validation,
@@ -34,6 +38,7 @@ export default function SearchForm() {
 			startDate: dateConverter(startDate),
 			endDate: dateConverter(endDate),
 		};
+		dispatch(stockSlice.actions.hideChart());
 		dispatch(fetchStockFromAPI(inputValue));
 		dispatch(fetchCandleFromAPI(propsObj));
 		sendDataToBackend();
